@@ -1,5 +1,9 @@
 # Simulador de Filas
 
-`$ ./gradlew run --args="{NOME_DO_ARQUIVO\*}"`
+Comando para rodar o simulador:
+
+`$ ./gradlew run --args="{NOME_DO_ARQUIVO*}"`
 
 \*NOME_DO_ARQUIVO: passar sem a extensão (.json)
+
+Obs.: O arquivo deve estar localizado no diretório src/main/resources/

@@ -1,0 +1,32 @@
+[
+  {
+    "fila": {
+      "servidores": 1,
+      "capacidade": 5
+    },
+    "simulacao": {
+      "tempoMinimoChegada": 2,
+      "tempoMaximoChegada": 4,
+      "tempoMinimoSaida": 3,
+      "tempoMaximoSaida": 5,
+      "tempoChegadaInicial": 3,
+      "eventos": 1000000
+    },
+    "vezes": 5
+  },
+  {
+    "fila": {
+      "servidores": 2,
+      "capacidade": 5
+    },
+    "simulacao": {
+      "tempoMinimoChegada": 2,
+      "tempoMaximoChegada": 4,
+      "tempoMinimoSaida": 3,
+      "tempoMaximoSaida": 5,
+      "tempoChegadaInicial": 3,
+      "eventos": 1000000
+    },
+    "vezes": 5
+  }
+]

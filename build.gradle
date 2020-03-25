@@ -1,12 +1,15 @@
 apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+mainClassName = 'com.github.rafaritter44.simulador.Main'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-	implementation group: 'junit', name: 'junit', version: '4.12'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
 }

@@ -4,7 +4,11 @@ public class Fila {
 	
 	private final int servidores;
 	private final int capacidade;
-	private int clientes;
+	private transient int clientes;
+	
+	public Fila() {
+		this(0, 0);
+	}
 	
 	public Fila(final int servidores, final int capacidade) {
 		this.servidores = servidores;

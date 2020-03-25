@@ -3,8 +3,11 @@ package com.github.rafaritter44.simulador.fila;
 import static com.github.rafaritter44.simulador.evento.TipoDeEvento.CHEGADA;
 import static com.github.rafaritter44.simulador.evento.TipoDeEvento.SAIDA;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Set;
 
 import com.github.rafaritter44.simulador.aleatorio.GeradorDeAleatorios;
 import com.github.rafaritter44.simulador.evento.EscalonadorDeEventos;
@@ -13,43 +16,57 @@ import com.github.rafaritter44.simulador.evento.Evento;
 public class SimuladorDeFilas {
 	
 	private final Fila fila;
-	private final long tempoMinimoChegada, tempoMaximoChegada;
-	private final long tempoMinimoSaida, tempoMaximoSaida;
-	private final EscalonadorDeEventos escalonador;
-	private final GeradorDeAleatorios aleatorio;
-	private final HashMap<Integer, Double> tempoPorClientes;
+	private final Simulacao simulacao;
+	private EscalonadorDeEventos escalonador;
+	private GeradorDeAleatorios aleatorio;
+	private HashMap<Integer, Double> tempoPorClientes;
 	private double tempo;
 	
-	public SimuladorDeFilas(final Fila fila,
-			final long tempoMinimoChegada, final long tempoMaximoChegada,
-			final long tempoMinimoSaida, final long tempoMaximoSaida) {
+	public SimuladorDeFilas(final Fila fila, final Simulacao simulacao) {
 		this.fila = fila;
-		this.tempoMinimoChegada = tempoMinimoChegada;
-		this.tempoMaximoChegada = tempoMaximoChegada;
-		this.tempoMinimoSaida = tempoMinimoSaida;
-		this.tempoMaximoSaida = tempoMaximoSaida;
+		this.simulacao = simulacao;
+	}
+	
+	public HashMap<Integer, Double> simular(final int vezes) {
+		final ArrayList<HashMap<Integer, Double>> resultados = new ArrayList<>();
+		for (int simulacao = 0; simulacao < vezes; simulacao++) {
+			resultados.add(simular());
+		}
+		final int maximoDeClientesNaFila = resultados
+				.stream()
+				.map(HashMap::keySet)
+				.flatMap(Set::stream)
+				.max(Comparator.naturalOrder())
+				.orElse(0);
+		final HashMap<Integer, Double> mediaDosResultados = new HashMap<>();
+		for (int clientesNaFila = 0; clientesNaFila < maximoDeClientesNaFila; clientesNaFila++) {
+			double tempo = 0D;
+			for (final HashMap<Integer, Double> resultado : resultados) {
+				tempo += Optional.ofNullable(resultado.get(clientesNaFila)).orElse(0D);
+			}
+			mediaDosResultados.put(clientesNaFila, tempo / vezes);
+		}
+		return mediaDosResultados;
+	}
+	
+	private HashMap<Integer, Double> simular() {
 		this.escalonador = new EscalonadorDeEventos();
 		this.aleatorio = new GeradorDeAleatorios();
 		this.tempoPorClientes = new HashMap<>();
 		this.tempo = 0D;
-	}
-	
-	public static void main(String[] args) throws InterruptedException {
-		final SimuladorDeFilas simulador = new SimuladorDeFilas(new Fila(1, 3), 1L, 2L, 3L, 6L);
-		simulador.chegada(new Evento(CHEGADA, 2D));
-		Optional<Evento> evento;
-		while ((evento = simulador.escalonador.proximo()).isPresent()) {
-			System.out.println(simulador.tempoPorClientes);
-			Thread.sleep(1000L);
-			switch (evento.get().getTipo()) {
+		chegada(new Evento(CHEGADA, simulacao.getTempoChegadaInicial()));
+		for (int i = 0; i < simulacao.getEventos(); i++) {
+			final Evento e = escalonador.proximo();
+			switch (e.getTipo()) {
 			case CHEGADA:
-				simulador.chegada(evento.get());
+				chegada(e);
 				break;
 			case SAIDA:
-				simulador.saida(evento.get());
+				saida(e);
 				break;
 			}
 		}
+		return tempoPorClientes;
 	}
 	
 	private void chegada(final Evento chegada) {
@@ -72,11 +89,13 @@ public class SimuladorDeFilas {
 	}
 	
 	private void agendaChegada() {
-		escalonador.add(new Evento(CHEGADA, tempo + aleatorio.proximo(tempoMinimoChegada, tempoMaximoChegada)));
+		escalonador.add(new Evento(CHEGADA, tempo + aleatorio.proximo(
+				simulacao.getTempoMinimoChegada(), simulacao.getTempoMaximoChegada())));
 	}
 	
 	private void agendaSaida() {
-		escalonador.add(new Evento(SAIDA, tempo + aleatorio.proximo(tempoMinimoSaida, tempoMaximoSaida)));
+		escalonador.add(new Evento(SAIDA, tempo + aleatorio.proximo(
+				simulacao.getTempoMinimoSaida(), simulacao.getTempoMaximoSaida())));
 	}
 	
 	private void contabilizaTempo(final Evento e) {

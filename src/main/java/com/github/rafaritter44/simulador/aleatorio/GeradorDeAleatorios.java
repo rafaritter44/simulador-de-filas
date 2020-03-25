@@ -10,7 +10,7 @@ public class GeradorDeAleatorios {
 	}
 	
 	public GeradorDeAleatorios(final double semente) {
-		metodoGerador = new MetodoCongruenteLinear(4L, 9L, 4L);
+		metodoGerador = new MetodoCongruenteLinear(25214903917L, 9L, (long) Math.pow(2D, 48D));
 		anterior = semente;
 	}
 	

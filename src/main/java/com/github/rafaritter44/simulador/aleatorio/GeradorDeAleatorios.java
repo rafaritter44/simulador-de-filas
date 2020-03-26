@@ -2,7 +2,9 @@ package com.github.rafaritter44.simulador.aleatorio;
 
 public class GeradorDeAleatorios {
 	
-	private final MetodoGerador metodoGerador;
+	private final long a;
+	private final long M;
+	private final long c;
 	private double anterior;
 	
 	public GeradorDeAleatorios() {
@@ -10,13 +12,15 @@ public class GeradorDeAleatorios {
 	}
 	
 	public GeradorDeAleatorios(final double semente) {
-		metodoGerador = new MetodoCongruenteLinear(25214903917L, 9L, (long) Math.pow(2D, 48D));
+		this.a = 25214903917L;
+		this.M = (long) Math.pow(2D, 48D);
+		this.c = 11L;
 		anterior = semente;
 	}
 	
 	public double proximo(final long minimo, final long maximo) {
-		anterior = metodoGerador.proximo(anterior);
-		return minimo + (anterior % (maximo - minimo + 1L));
+		anterior = (a * anterior + c) % M;
+		return (maximo - minimo) * (anterior / M) + minimo;
 	}
 	
 }

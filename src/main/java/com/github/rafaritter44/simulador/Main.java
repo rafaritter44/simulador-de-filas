@@ -31,7 +31,7 @@ public class Main {
 			resultado.forEach((clientes, tempo) -> {
 				System.out.printf("CLIENTES NA FILA: %d\t", clientes);
 				System.out.printf("TEMPO: %.2f\t", tempo);
-				System.out.printf("PORCENTAGEM: %.2f\n", tempo * 100 / tempoTotal);
+				System.out.printf("PORCENTAGEM: %.2f\n", tempo * 100D / tempoTotal);
 			});
 		}
 	}

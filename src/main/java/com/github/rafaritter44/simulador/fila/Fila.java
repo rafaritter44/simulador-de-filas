@@ -25,6 +25,10 @@ public class Fila {
 		clientes -= 1;
 	}
 	
+	public void limpar() {
+		clientes = 0;
+	}
+	
 	public int getServidores() {
 		return servidores;
 	}

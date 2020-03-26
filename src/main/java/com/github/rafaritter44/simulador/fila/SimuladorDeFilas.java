@@ -50,6 +50,7 @@ public class SimuladorDeFilas {
 	}
 	
 	private HashMap<Integer, Double> simular() {
+		this.fila.limpar();
 		this.escalonador = new EscalonadorDeEventos();
 		this.aleatorio = new GeradorDeAleatorios();
 		this.tempoPorClientes = new HashMap<>();
@@ -83,7 +84,7 @@ public class SimuladorDeFilas {
 	private void saida(final Evento saida) {
 		contabilizaTempo(saida);
 		fila.saida();
-		if (fila.getClientes() >= 1) {
+		if (fila.getClientes() >= fila.getServidores()) {
 			agendaSaida();
 		}
 	}

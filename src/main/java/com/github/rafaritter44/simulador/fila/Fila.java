@@ -6,7 +6,8 @@ public class Fila {
 	private final int capacidade;
 	private transient int clientes;
 	
-	public Fila() {
+	@SuppressWarnings("unused")
+	private Fila() {
 		this(0, 0);
 	}
 	

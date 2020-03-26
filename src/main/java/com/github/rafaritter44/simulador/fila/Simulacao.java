@@ -7,7 +7,8 @@ public class Simulacao {
 	private final double tempoChegadaInicial;
 	private final int eventos;
 	
-	public Simulacao() {
+	@SuppressWarnings("unused")
+	private Simulacao() {
 		this(0L, 0L, 0L, 0L, 0D, 0);
 	}
 	

@@ -9,7 +9,8 @@ public class Configuracao {
 	private final Simulacao simulacao;
 	private final int vezes;
 	
-	public Configuracao() {
+	@SuppressWarnings("unused")
+	private Configuracao() {
 		this(null, null, 0);
 	}
 	

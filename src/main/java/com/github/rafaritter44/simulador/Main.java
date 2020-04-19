@@ -24,7 +24,7 @@ public class Main {
 			System.out.println("CONFIG:\n" + mapper.writeValueAsString(config));
 			final double tempoTotal = resultado
 					.values()
-					.stream()
+					.parallelStream()
 					.reduce(0D, (a, b) -> a + b);
 			System.out.printf("TEMPO TOTAL: %.2f\n", tempoTotal);
 			System.out.println("RESULTADO:");

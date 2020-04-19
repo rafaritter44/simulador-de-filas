@@ -42,9 +42,9 @@ public class SimuladorDeFilas {
 			resultados.add(simular());
 		}
 		final int maximoDeClientesNaFila = resultados
-				.stream()
+				.parallelStream()
 				.map(HashMap::keySet)
-				.flatMap(Set::stream)
+				.flatMap(Set::parallelStream)
 				.max(Comparator.naturalOrder())
 				.orElse(0);
 		final HashMap<Integer, Double> mediaDosResultados = new HashMap<>();

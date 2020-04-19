@@ -17,7 +17,7 @@ import com.github.rafaritter44.simulador.aleatorio.GeradorDeAleatorios;
 public class SimuladorDeFilasTest {
 	
 	@Test
-	public void test() {
+	public void testaFilaSimples() {
 		final GeradorDeAleatorios geradorDeAleatorios = mock(GeradorDeAleatorios.class);
 		final Queue<Double> pseudoAleatorios = new LinkedList<>();
 		pseudoAleatorios.add(3.9828);

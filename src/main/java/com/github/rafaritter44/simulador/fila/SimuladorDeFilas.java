@@ -24,6 +24,7 @@ public class SimuladorDeFilas {
 	private GeradorDeAleatorios geradorDeAleatorios;
 	private HashMap<Integer, Double> tempoPorClientes;
 	private double tempo;
+	private int eventosAgendados;
 	
 	public SimuladorDeFilas(final Fila fila, final Simulacao simulacao) {
 		this(fila, simulacao, MetodoCongruenteLinear::new);
@@ -64,8 +65,9 @@ public class SimuladorDeFilas {
 		this.geradorDeAleatorios = geradorDeAleatoriosFactory.get();
 		this.tempoPorClientes = new HashMap<>();
 		this.tempo = 0D;
+		this.eventosAgendados = 0;
 		chegada(new Evento(CHEGADA, simulacao.getTempoChegadaInicial()));
-		for (int i = 0; i < simulacao.getEventos(); i++) {
+		while (eventosAgendados < simulacao.getEventos()) {
 			final Evento e = escalonador.proximo();
 			switch (e.getTipo()) {
 			case CHEGADA:
@@ -99,11 +101,13 @@ public class SimuladorDeFilas {
 	}
 	
 	private void agendaChegada() {
+		eventosAgendados += 1;
 		escalonador.add(new Evento(CHEGADA, tempo + geradorDeAleatorios.proximo(
 				simulacao.getTempoMinimoChegada(), simulacao.getTempoMaximoChegada())));
 	}
 	
 	private void agendaSaida() {
+		eventosAgendados += 1;
 		escalonador.add(new Evento(SAIDA, tempo + geradorDeAleatorios.proximo(
 				simulacao.getTempoMinimoSaida(), simulacao.getTempoMaximoSaida())));
 	}

@@ -10,7 +10,7 @@
       "tempoMinimoSaida": 3,
       "tempoMaximoSaida": 5,
       "tempoChegadaInicial": 3,
-      "eventos": 1000000
+      "maximoEventosAgendados": 1000000
     },
     "vezes": 5
   },
@@ -25,7 +25,7 @@
       "tempoMinimoSaida": 3,
       "tempoMaximoSaida": 5,
       "tempoChegadaInicial": 3,
-      "eventos": 1000000
+      "maximoEventosAgendados": 1000000
     },
     "vezes": 5
   }

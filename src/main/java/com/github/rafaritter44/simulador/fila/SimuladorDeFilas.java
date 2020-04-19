@@ -8,8 +8,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import com.github.rafaritter44.simulador.aleatorio.GeradorDeAleatorios;
+import com.github.rafaritter44.simulador.aleatorio.MetodoCongruenteLinear;
 import com.github.rafaritter44.simulador.evento.EscalonadorDeEventos;
 import com.github.rafaritter44.simulador.evento.Evento;
 
@@ -17,14 +19,21 @@ public class SimuladorDeFilas {
 	
 	private final Fila fila;
 	private final Simulacao simulacao;
+	private final Supplier<GeradorDeAleatorios> geradorDeAleatoriosFactory;
 	private EscalonadorDeEventos escalonador;
-	private GeradorDeAleatorios aleatorio;
+	private GeradorDeAleatorios geradorDeAleatorios;
 	private HashMap<Integer, Double> tempoPorClientes;
 	private double tempo;
 	
 	public SimuladorDeFilas(final Fila fila, final Simulacao simulacao) {
+		this(fila, simulacao, MetodoCongruenteLinear::new);
+	}
+	
+	public SimuladorDeFilas(final Fila fila, final Simulacao simulacao,
+			final Supplier<GeradorDeAleatorios> geradorDeAleatoriosFactory) {
 		this.fila = fila;
 		this.simulacao = simulacao;
+		this.geradorDeAleatoriosFactory = geradorDeAleatoriosFactory;
 	}
 	
 	public HashMap<Integer, Double> simular(final int vezes) {
@@ -52,7 +61,7 @@ public class SimuladorDeFilas {
 	private HashMap<Integer, Double> simular() {
 		this.fila.limpar();
 		this.escalonador = new EscalonadorDeEventos();
-		this.aleatorio = new GeradorDeAleatorios();
+		this.geradorDeAleatorios = geradorDeAleatoriosFactory.get();
 		this.tempoPorClientes = new HashMap<>();
 		this.tempo = 0D;
 		chegada(new Evento(CHEGADA, simulacao.getTempoChegadaInicial()));
@@ -90,12 +99,12 @@ public class SimuladorDeFilas {
 	}
 	
 	private void agendaChegada() {
-		escalonador.add(new Evento(CHEGADA, tempo + aleatorio.proximo(
+		escalonador.add(new Evento(CHEGADA, tempo + geradorDeAleatorios.proximo(
 				simulacao.getTempoMinimoChegada(), simulacao.getTempoMaximoChegada())));
 	}
 	
 	private void agendaSaida() {
-		escalonador.add(new Evento(SAIDA, tempo + aleatorio.proximo(
+		escalonador.add(new Evento(SAIDA, tempo + geradorDeAleatorios.proximo(
 				simulacao.getTempoMinimoSaida(), simulacao.getTempoMaximoSaida())));
 	}
 	

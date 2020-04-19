@@ -48,7 +48,7 @@ public class SimuladorDeFilas {
 				.max(Comparator.naturalOrder())
 				.orElse(0);
 		final HashMap<Integer, Double> mediaDosResultados = new HashMap<>();
-		for (int clientesNaFila = 0; clientesNaFila < maximoDeClientesNaFila; clientesNaFila++) {
+		for (int clientesNaFila = 0; clientesNaFila <= maximoDeClientesNaFila; clientesNaFila++) {
 			double tempo = 0D;
 			for (final HashMap<Integer, Double> resultado : resultados) {
 				tempo += Optional.ofNullable(resultado.get(clientesNaFila)).orElse(0D);

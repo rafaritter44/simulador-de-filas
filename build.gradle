@@ -10,6 +10,22 @@ repositories {
     mavenCentral()
 }
 
+ext {
+	jacksonVersion = '2.10.3'
+	junitVersion = '5.6.2'
+	mockitoVersion = '1.10.19'
+}
+
 dependencies {
-	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "$jacksonVersion"
+	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "$junitVersion"
+	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "$junitVersion"
+	testImplementation group: 'org.mockito', name: 'mockito-all', version: "$mockitoVersion"
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
 }

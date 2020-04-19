@@ -26,12 +26,12 @@ public class Main {
 					.values()
 					.parallelStream()
 					.reduce(0D, (a, b) -> a + b);
-			System.out.printf("TEMPO TOTAL: %.2f\n", tempoTotal);
+			System.out.printf("TEMPO TOTAL: %.4f\n", tempoTotal);
 			System.out.println("RESULTADO:");
 			resultado.forEach((clientes, tempo) -> {
 				System.out.printf("CLIENTES NA FILA: %d\t", clientes);
-				System.out.printf("TEMPO: %.2f\t", tempo);
-				System.out.printf("PORCENTAGEM: %.2f\n", tempo * 100D / tempoTotal);
+				System.out.printf("TEMPO: %.4f\t", tempo);
+				System.out.printf("PORCENTAGEM: %.4f\n", tempo * 100D / tempoTotal);
 			});
 		}
 	}

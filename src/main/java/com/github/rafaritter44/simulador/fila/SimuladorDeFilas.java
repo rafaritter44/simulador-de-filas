@@ -27,7 +27,7 @@ public class SimuladorDeFilas {
 	private int eventosAgendados;
 	
 	public SimuladorDeFilas(final Fila fila, final Simulacao simulacao) {
-		this(fila, simulacao, MetodoCongruenteLinear::new);
+		this(fila, simulacao, () -> new GeradorDeAleatorios(new MetodoCongruenteLinear()));
 	}
 	
 	public SimuladorDeFilas(final Fila fila, final Simulacao simulacao,

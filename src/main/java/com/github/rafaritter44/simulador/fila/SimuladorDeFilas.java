@@ -67,7 +67,8 @@ public class SimuladorDeFilas {
 		this.tempo = 0D;
 		this.eventosAgendados = 0;
 		chegada(new Evento(CHEGADA, simulacao.getTempoChegadaInicial()));
-		while (eventosAgendados < simulacao.getEventos()) {
+		final int maximoEventosAgendados = simulacao.getMaximoEventosAgendados();
+		while (eventosAgendados < maximoEventosAgendados) {
 			final Evento e = escalonador.proximo();
 			switch (e.getTipo()) {
 			case CHEGADA:

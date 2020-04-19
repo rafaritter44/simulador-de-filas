@@ -5,31 +5,32 @@ import com.github.rafaritter44.simulador.fila.Simulacao;
 
 public class Configuracao {
 	
-	private final Fila fila;
-	private final Simulacao simulacao;
-	private final int vezes;
-	
-	@SuppressWarnings("unused")
-	private Configuracao() {
-		this(null, null, 0);
-	}
-	
-	public Configuracao(final Fila fila, final Simulacao simulacao, final int vezes) {
-		this.fila = fila;
-		this.simulacao = simulacao;
-		this.vezes = vezes;
-	}
+	private Fila fila;
+	private Simulacao simulacao;
+	private int vezes;
 	
 	public Fila getFila() {
 		return fila;
+	}
+	
+	public void setFila(final Fila fila) {
+		this.fila = fila;
 	}
 	
 	public Simulacao getSimulacao() {
 		return simulacao;
 	}
 	
+	public void setSimulacao(final Simulacao simulacao) {
+		this.simulacao = simulacao;
+	}
+	
 	public int getVezes() {
 		return vezes;
+	}
+	
+	public void setVezes(final int vezes) {
+		this.vezes = vezes;
 	}
 	
 }

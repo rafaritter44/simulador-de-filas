@@ -2,49 +2,57 @@ package com.github.rafaritter44.simulador.fila;
 
 public class Simulacao {
 	
-	private final long tempoMinimoChegada, tempoMaximoChegada;
-	private final long tempoMinimoSaida, tempoMaximoSaida;
-	private final double tempoChegadaInicial;
-	private final int eventos;
+	private long tempoMinimoChegada, tempoMaximoChegada;
+	private long tempoMinimoSaida, tempoMaximoSaida;
+	private double tempoChegadaInicial;
+	private int maximoEventosAgendados;
 	
-	@SuppressWarnings("unused")
-	private Simulacao() {
-		this(0L, 0L, 0L, 0L, 0D, 0);
-	}
-	
-	public Simulacao(final long tempoMinimoChegada, final long tempoMaximoChegada,
-			final long tempoMinimoSaida, final long tempoMaximoSaida,
-			final double tempoChegadaInicial, final int eventos) {
-		this.tempoMinimoChegada = tempoMinimoChegada;
-		this.tempoMaximoChegada = tempoMaximoChegada;
-		this.tempoMinimoSaida = tempoMinimoSaida;
-		this.tempoMaximoSaida = tempoMaximoSaida;
-		this.tempoChegadaInicial = tempoChegadaInicial;
-		this.eventos = eventos;
-	}
-
 	public long getTempoMinimoChegada() {
 		return tempoMinimoChegada;
 	}
-
+	
+	public void setTempoMinimoChegada(final long tempoMinimoChegada) {
+		this.tempoMinimoChegada = tempoMinimoChegada;
+	}
+	
 	public long getTempoMaximoChegada() {
 		return tempoMaximoChegada;
 	}
-
+	
+	public void setTempoMaximoChegada(final long tempoMaximoChegada) {
+		this.tempoMaximoChegada = tempoMaximoChegada;
+	}
+	
 	public long getTempoMinimoSaida() {
 		return tempoMinimoSaida;
 	}
-
+	
+	public void setTempoMinimoSaida(final long tempoMinimoSaida) {
+		this.tempoMinimoSaida = tempoMinimoSaida;
+	}
+	
 	public long getTempoMaximoSaida() {
 		return tempoMaximoSaida;
 	}
-
+	
+	public void setTempoMaximoSaida(final long tempoMaximoSaida) {
+		this.tempoMaximoSaida = tempoMaximoSaida;
+	}
+	
 	public double getTempoChegadaInicial() {
 		return tempoChegadaInicial;
 	}
-
-	public int getEventos() {
-		return eventos;
+	
+	public void setTempoChegadaInicial(final double tempoChegadaInicial) {
+		this.tempoChegadaInicial = tempoChegadaInicial;
+	}
+	
+	public int getMaximoEventosAgendados() {
+		return maximoEventosAgendados;
+	}
+	
+	public void setMaximoEventosAgendados(final int maximoEventosAgendados) {
+		this.maximoEventosAgendados = maximoEventosAgendados;
 	}
 	
 }

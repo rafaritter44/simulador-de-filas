@@ -2,19 +2,12 @@ package com.github.rafaritter44.simulador.fila;
 
 public class Fila {
 	
-	private final int servidores;
-	private final int capacidade;
+	private int servidores;
+	private int capacidade;
 	private transient int clientes;
 	
-	@SuppressWarnings("unused")
-	private Fila() {
-		this(0, 0);
-	}
-	
-	public Fila(final int servidores, final int capacidade) {
-		this.servidores = servidores;
-		this.capacidade = capacidade;
-		this.clientes = 0;
+	public Fila() {
+		clientes = 0;
 	}
 	
 	public void chegada() {
@@ -28,17 +21,29 @@ public class Fila {
 	public void limpar() {
 		clientes = 0;
 	}
-	
+
 	public int getServidores() {
 		return servidores;
 	}
-	
+
+	public void setServidores(final int servidores) {
+		this.servidores = servidores;
+	}
+
 	public int getCapacidade() {
 		return capacidade;
 	}
-	
+
+	public void setCapacidade(final int capacidade) {
+		this.capacidade = capacidade;
+	}
+
 	public int getClientes() {
 		return clientes;
+	}
+
+	public void setClientes(final int clientes) {
+		this.clientes = clientes;
 	}
 	
 }

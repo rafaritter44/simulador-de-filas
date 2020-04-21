@@ -1,124 +1,80 @@
 package com.github.rafaritter44.simulador.fila;
 
-import static com.github.rafaritter44.simulador.evento.TipoDeEvento.CHEGADA;
-import static com.github.rafaritter44.simulador.evento.TipoDeEvento.SAIDA;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
-import com.github.rafaritter44.simulador.aleatorio.GeradorDeAleatorios;
-import com.github.rafaritter44.simulador.aleatorio.MetodoCongruenteLinear;
+import com.github.rafaritter44.simulador.Contexto;
+import com.github.rafaritter44.simulador.evento.Chegada;
 import com.github.rafaritter44.simulador.evento.EscalonadorDeEventos;
-import com.github.rafaritter44.simulador.evento.Evento;
 
 public class SimuladorDeFilas {
 	
-	private final Fila fila;
-	private final Simulacao simulacao;
-	private final Supplier<GeradorDeAleatorios> geradorDeAleatoriosFactory;
-	private EscalonadorDeEventos escalonador;
-	private GeradorDeAleatorios geradorDeAleatorios;
-	private HashMap<Integer, Double> tempoPorClientes;
-	private double tempo;
-	private int eventosAgendados;
+	private static final Contexto CONTEXTO = Contexto.get();
 	
-	public SimuladorDeFilas(final Fila fila, final Simulacao simulacao) {
-		this(fila, simulacao, () -> new GeradorDeAleatorios(new MetodoCongruenteLinear()));
-	}
-	
-	public SimuladorDeFilas(final Fila fila, final Simulacao simulacao,
-			final Supplier<GeradorDeAleatorios> geradorDeAleatoriosFactory) {
-		this.fila = fila;
-		this.simulacao = simulacao;
-		this.geradorDeAleatoriosFactory = geradorDeAleatoriosFactory;
-	}
-	
-	public HashMap<Integer, Double> simular(final int vezes) {
-		final ArrayList<HashMap<Integer, Double>> resultados = new ArrayList<>();
-		for (int simulacao = 0; simulacao < vezes; simulacao++) {
-			resultados.add(simular());
+	public Map<Integer, Map<Integer, Double>> simular(final Simulacao simulacao) {
+		final int vezes = simulacao.getVezes();
+		final List<Map<Integer, Map<Integer, Double>>> resultados = new ArrayList<>();
+		for (int numeroDaSimulacao = 0; numeroDaSimulacao < vezes; numeroDaSimulacao++) {
+			simularUmaVez(simulacao);
+			final Map<Integer, Map<Integer, Double>> resultado = CONTEXTO
+					.getFilas()
+					.values()
+					.parallelStream()
+					.collect(Collectors.toMap(Fila::getId, Fila::getTempoPorClientes));
+			resultados.add(resultado);
 		}
-		final int maximoDeClientesNaFila = resultados
+		final Map<Integer, Integer> maximoDeClientesPorFila = resultados
 				.parallelStream()
-				.map(HashMap::keySet)
+				.map(Map::entrySet)
 				.flatMap(Set::parallelStream)
-				.max(Comparator.naturalOrder())
-				.orElse(0);
-		final HashMap<Integer, Double> mediaDosResultados = new HashMap<>();
-		for (int clientesNaFila = 0; clientesNaFila <= maximoDeClientesNaFila; clientesNaFila++) {
-			double tempo = 0D;
-			for (final HashMap<Integer, Double> resultado : resultados) {
-				tempo += Optional.ofNullable(resultado.get(clientesNaFila)).orElse(0D);
+				.collect(Collectors.toMap(Entry::getKey, fila -> fila
+						.getValue()
+						.keySet()
+						.parallelStream()
+						.max(Comparator.naturalOrder())
+						.orElse(0), Integer::max));
+		final Map<Integer, Map<Integer, Double>> mediaDosResultados = new HashMap<>();
+		for (final int fila : maximoDeClientesPorFila.keySet()) {
+			mediaDosResultados.put(fila, new HashMap<>());
+			final int maximoDeClientesNaFila = maximoDeClientesPorFila.get(fila);
+			for (int clientesNaFila = 0; clientesNaFila <= maximoDeClientesNaFila; clientesNaFila++) {
+				double tempo = 0D;
+				final List<Map<Integer, Double>> resultadosPorFila = resultados
+						.stream()
+						.map(resultado -> resultado.get(fila))
+						.collect(Collectors.toList());
+				for (final Map<Integer, Double> tempoPorClientes : resultadosPorFila) {
+					tempo += Optional.ofNullable(tempoPorClientes.get(clientesNaFila)).orElse(0D);
+				}
+				mediaDosResultados.get(fila).put(clientesNaFila, tempo / vezes);
 			}
-			mediaDosResultados.put(clientesNaFila, tempo / vezes);
 		}
 		return mediaDosResultados;
 	}
 	
-	private HashMap<Integer, Double> simular() {
-		this.fila.limpar();
-		this.escalonador = new EscalonadorDeEventos();
-		this.geradorDeAleatorios = geradorDeAleatoriosFactory.get();
-		this.tempoPorClientes = new HashMap<>();
-		this.tempo = 0D;
-		this.eventosAgendados = 0;
-		chegada(new Evento(CHEGADA, simulacao.getTempoChegadaInicial()));
+	private void simularUmaVez(final Simulacao simulacao) {
+		CONTEXTO.limpar();
+		final Fila primeiraFila = CONTEXTO
+				.getFilas()
+				.entrySet()
+				.parallelStream()
+				.sorted(Entry.comparingByKey())
+				.findFirst()
+				.map(Entry::getValue)
+				.orElseThrow(() -> new IllegalStateException("Nenhuma fila no contexto"));
+		new Chegada(primeiraFila, simulacao.getTempoChegadaInicial()).executar();
 		final int maximoEventosAgendados = simulacao.getMaximoEventosAgendados();
-		while (eventosAgendados < maximoEventosAgendados) {
-			final Evento e = escalonador.proximo();
-			switch (e.getTipo()) {
-			case CHEGADA:
-				chegada(e);
-				break;
-			case SAIDA:
-				saida(e);
-				break;
-			}
+		final EscalonadorDeEventos escalonador = CONTEXTO.getEscalonador();
+		while (CONTEXTO.getEventosAgendados() < maximoEventosAgendados) {
+			escalonador.proximo().executar();
 		}
-		return tempoPorClientes;
-	}
-	
-	private void chegada(final Evento chegada) {
-		contabilizaTempo(chegada);
-		if (fila.getClientes() < fila.getCapacidade()) {
-			fila.chegada();
-			if (fila.getClientes() <= fila.getServidores()) {
-				agendaSaida();
-			}
-		}
-		agendaChegada();
-	}
-	
-	private void saida(final Evento saida) {
-		contabilizaTempo(saida);
-		fila.saida();
-		if (fila.getClientes() >= fila.getServidores()) {
-			agendaSaida();
-		}
-	}
-	
-	private void agendaChegada() {
-		eventosAgendados += 1;
-		escalonador.add(new Evento(CHEGADA, tempo + geradorDeAleatorios.proximo(
-				simulacao.getTempoMinimoChegada(), simulacao.getTempoMaximoChegada())));
-	}
-	
-	private void agendaSaida() {
-		eventosAgendados += 1;
-		escalonador.add(new Evento(SAIDA, tempo + geradorDeAleatorios.proximo(
-				simulacao.getTempoMinimoSaida(), simulacao.getTempoMaximoSaida())));
-	}
-	
-	private void contabilizaTempo(final Evento e) {
-		final double tempoJaContabilizado = Optional
-				.ofNullable(tempoPorClientes.get(fila.getClientes()))
-				.orElse(0D);
-		tempoPorClientes.put(fila.getClientes(), e.getTempo() - tempo + tempoJaContabilizado);
-		tempo = e.getTempo();
 	}
 	
 }

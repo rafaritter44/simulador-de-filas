@@ -1,20 +1,21 @@
 package com.github.rafaritter44.simulador;
 
+import java.util.Map;
+
 import com.github.rafaritter44.simulador.fila.Fila;
 import com.github.rafaritter44.simulador.fila.Simulacao;
 
 public class Configuracao {
 	
-	private Fila fila;
+	private Map<Integer, Fila> filas;
 	private Simulacao simulacao;
-	private int vezes;
 	
-	public Fila getFila() {
-		return fila;
+	public Map<Integer, Fila> getFilas() {
+		return filas;
 	}
 	
-	public void setFila(final Fila fila) {
-		this.fila = fila;
+	public void setFilas(final Map<Integer, Fila> filas) {
+		this.filas = filas;
 	}
 	
 	public Simulacao getSimulacao() {
@@ -23,14 +24,6 @@ public class Configuracao {
 	
 	public void setSimulacao(final Simulacao simulacao) {
 		this.simulacao = simulacao;
-	}
-	
-	public int getVezes() {
-		return vezes;
-	}
-	
-	public void setVezes(final int vezes) {
-		this.vezes = vezes;
 	}
 	
 }

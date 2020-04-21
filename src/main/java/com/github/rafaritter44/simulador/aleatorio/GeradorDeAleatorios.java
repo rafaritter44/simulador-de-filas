@@ -8,7 +8,7 @@ public class GeradorDeAleatorios {
 		this.metodoGerador = metodoGerador;
 	}
 	
-	public double proximo(long minimo, long maximo) {
+	public double proximo(double minimo, double maximo) {
 		return (maximo - minimo) * metodoGerador.proximo() + minimo;
 	}
 	

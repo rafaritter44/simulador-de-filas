@@ -4,8 +4,8 @@ import static com.fasterxml.jackson.databind.MapperFeature.PROPAGATE_TRANSIENT_M
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,20 +19,27 @@ public class Main {
 		final ObjectMapper mapper = new ObjectMapper().configure(PROPAGATE_TRANSIENT_MARKER, true);
 		final List<Configuracao> configs = mapper.readValue(is, new TypeReference<List<Configuracao>>() {});
 		for (final Configuracao config : configs) {
-			final SimuladorDeFilas simulador = new SimuladorDeFilas(config.getFila(), config.getSimulacao());
-			final HashMap<Integer, Double> resultado = simulador.simular(config.getVezes());
+			Contexto.get().setFilas(config.getFilas());
+			final SimuladorDeFilas simulador = new SimuladorDeFilas();
+			final Map<Integer, Map<Integer, Double>> resultado = simulador.simular(config.getSimulacao());
 			System.out.println("CONFIG:\n" + mapper.writeValueAsString(config));
-			final double tempoTotal = resultado
-					.values()
-					.parallelStream()
-					.reduce(0D, (a, b) -> a + b);
-			System.out.printf("TEMPO TOTAL: %.4f\n", tempoTotal);
-			System.out.println("RESULTADO:");
-			resultado.forEach((clientes, tempo) -> {
-				System.out.printf("CLIENTES NA FILA: %d\t", clientes);
-				System.out.printf("TEMPO: %.4f\t", tempo);
-				System.out.printf("PORCENTAGEM: %.4f\n", tempo * 100D / tempoTotal);
-			});
+			resultado
+					.entrySet()
+					.forEach(fila -> {
+						System.out.printf("FILA %d\n", fila.getKey());
+						final double tempoTotal = fila
+								.getValue()
+								.values()
+								.parallelStream()
+								.reduce(0D, Double::sum);
+						System.out.printf("TEMPO TOTAL: %.4f\n", tempoTotal);
+						System.out.println("RESULTADO:");
+						fila.getValue().forEach((clientes, tempo) -> {
+							System.out.printf("CLIENTES NA FILA: %d\t", clientes);
+							System.out.printf("TEMPO: %.4f\t", tempo);
+							System.out.printf("PORCENTAGEM: %.4f\n", tempo * 100D / tempoTotal);
+						});
+					});
 		}
 	}
 	

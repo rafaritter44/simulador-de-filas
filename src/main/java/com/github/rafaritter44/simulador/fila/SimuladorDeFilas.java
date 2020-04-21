@@ -47,7 +47,7 @@ public class SimuladorDeFilas {
 			for (int clientesNaFila = 0; clientesNaFila <= maximoDeClientesNaFila; clientesNaFila++) {
 				double tempo = 0D;
 				final List<Map<Integer, Double>> resultadosPorFila = resultados
-						.stream()
+						.parallelStream()
 						.map(resultado -> resultado.get(fila))
 						.collect(Collectors.toList());
 				for (final Map<Integer, Double> tempoPorClientes : resultadosPorFila) {

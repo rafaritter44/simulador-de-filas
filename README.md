@@ -1,6 +1,6 @@
 # Simulador de Filas
 
-Comando para rodar o simulador:
+## Comando para rodar o simulador:
 
 `$ ./gradlew run --args="{NOME_DO_ARQUIVO*}"`
 
@@ -8,6 +8,6 @@ Comando para rodar o simulador:
 
 Obs.: O arquivo deve estar localizado no diretório src/main/resources/
 
-Comando para rodar testes unitários:
+## Comando para rodar testes unitários:
 
 `$ ./gradlew test`

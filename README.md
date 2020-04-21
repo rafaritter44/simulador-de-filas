@@ -10,4 +10,4 @@ Obs.: O arquivo deve estar localizado no diretório src/main/resources/
 
 ## Comando para rodar testes unitários:
 
-`$ ./gradlew test`
+`$ ./gradlew clean test`

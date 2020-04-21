@@ -28,7 +28,7 @@ public class SimuladorDeFilasTest {
 	}
 	
 	@Test
-	public void testaFilaSimples() {
+	public void testarFilaSimples() {
 		final MetodoGerador metodoGerador = mock(MetodoGerador.class);
 		final Queue<Double> pseudoAleatorios = new LinkedList<>();
 		pseudoAleatorios.add(0.3276);
@@ -67,7 +67,7 @@ public class SimuladorDeFilasTest {
 	}
 	
 	@Test
-	public void testaFilasEmTandem() {
+	public void testarFilasEmTandem() {
 		final MetodoGerador metodoGerador = mock(MetodoGerador.class);
 		final Queue<Double> pseudoAleatorios = new LinkedList<>();
 		pseudoAleatorios.add(0.9921);

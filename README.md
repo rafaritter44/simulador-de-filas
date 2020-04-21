@@ -7,3 +7,7 @@ Comando para rodar o simulador:
 \*NOME_DO_ARQUIVO: passar sem a extensão (.json)
 
 Obs.: O arquivo deve estar localizado no diretório src/main/resources/
+
+Comando para rodar testes unitários:
+
+`$ ./gradlew test`

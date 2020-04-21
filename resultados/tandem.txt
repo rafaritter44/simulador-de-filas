@@ -1,0 +1,21 @@
+
+> Task :run
+CONFIG:
+{"filas":{"1":{"id":1,"paraId":2,"servidores":2,"capacidade":3,"tempoMinimoChegada":2.0,"tempoMaximoChegada":3.0,"tempoMinimoSaida":2.0,"tempoMaximoSaida":5.0},"2":{"id":2,"paraId":0,"servidores":1,"capacidade":3,"tempoMinimoChegada":0.0,"tempoMaximoChegada":0.0,"tempoMinimoSaida":3.0,"tempoMaximoSaida":5.0}},"simulacao":{"vezes":5,"tempoChegadaInicial":2.5,"maximoEventosAgendados":100000}}
+FILA 1
+TEMPO TOTAL: 95199.8971
+RESULTADO:
+CLIENTES NA FILA: 0	TEMPO: 1907.0548	PORCENTAGEM: 2.0032
+CLIENTES NA FILA: 1	TEMPO: 53100.9115	PORCENTAGEM: 55.7783
+CLIENTES NA FILA: 2	TEMPO: 39654.4787	PORCENTAGEM: 41.6539
+CLIENTES NA FILA: 3	TEMPO: 537.4520	PORCENTAGEM: 0.5646
+FILA 2
+TEMPO TOTAL: 95199.8971
+RESULTADO:
+CLIENTES NA FILA: 0	TEMPO: 6.1191	PORCENTAGEM: 0.0064
+CLIENTES NA FILA: 1	TEMPO: 470.9308	PORCENTAGEM: 0.4947
+CLIENTES NA FILA: 2	TEMPO: 37364.6096	PORCENTAGEM: 39.2486
+CLIENTES NA FILA: 3	TEMPO: 57358.2376	PORCENTAGEM: 60.2503
+
+BUILD SUCCESSFUL in 3s
+3 actionable tasks: 1 executed, 2 up-to-date

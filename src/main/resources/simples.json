@@ -14,7 +14,7 @@
     "simulacao": {
       "vezes": 5,
       "tempoChegadaInicial": 3,
-      "maximoEventosAgendados": 1000000
+      "maximoEventosAgendados": 100000
     }
   },
   {
@@ -32,7 +32,7 @@
     "simulacao": {
       "vezes": 5,
       "tempoChegadaInicial": 3,
-      "maximoEventosAgendados": 1000000
+      "maximoEventosAgendados": 100000
     }
   }
 ]

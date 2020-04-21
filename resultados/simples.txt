@@ -1,0 +1,25 @@
+
+> Task :run
+CONFIG:
+{"filas":{"1":{"id":1,"paraId":0,"servidores":1,"capacidade":5,"tempoMinimoChegada":2.0,"tempoMaximoChegada":4.0,"tempoMinimoSaida":3.0,"tempoMaximoSaida":5.0}},"simulacao":{"vezes":5,"tempoChegadaInicial":3.0,"maximoEventosAgendados":100000}}
+FILA 1
+TEMPO TOTAL: 171423.0989
+RESULTADO:
+CLIENTES NA FILA: 0	TEMPO: 3.1275	PORCENTAGEM: 0.0018
+CLIENTES NA FILA: 1	TEMPO: 11.3701	PORCENTAGEM: 0.0066
+CLIENTES NA FILA: 2	TEMPO: 14.3610	PORCENTAGEM: 0.0084
+CLIENTES NA FILA: 3	TEMPO: 258.7226	PORCENTAGEM: 0.1509
+CLIENTES NA FILA: 4	TEMPO: 68657.2889	PORCENTAGEM: 40.0514
+CLIENTES NA FILA: 5	TEMPO: 102478.2287	PORCENTAGEM: 59.7809
+CONFIG:
+{"filas":{"1":{"id":1,"paraId":0,"servidores":2,"capacidade":5,"tempoMinimoChegada":2.0,"tempoMaximoChegada":4.0,"tempoMinimoSaida":3.0,"tempoMaximoSaida":5.0}},"simulacao":{"vezes":5,"tempoChegadaInicial":3.0,"maximoEventosAgendados":100000}}
+FILA 1
+TEMPO TOTAL: 150019.3850
+RESULTADO:
+CLIENTES NA FILA: 0	TEMPO: 2061.9720	PORCENTAGEM: 1.3745
+CLIENTES NA FILA: 1	TEMPO: 95943.1981	PORCENTAGEM: 63.9539
+CLIENTES NA FILA: 2	TEMPO: 51739.0697	PORCENTAGEM: 34.4883
+CLIENTES NA FILA: 3	TEMPO: 275.1453	PORCENTAGEM: 0.1834
+
+BUILD SUCCESSFUL in 1s
+3 actionable tasks: 1 executed, 2 up-to-date

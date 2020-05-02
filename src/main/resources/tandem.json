@@ -1,35 +1,34 @@
 [
-    {
-      "filas": {
-        "1": {
-          "id": 1,
-          "roteamentos": [
-              {
-                  "destino": 2,
-                  "probabilidade": 1
-              }
-          ],
-          "servidores": 2,
-          "capacidade": 3,
-          "comChegadasDaRua": true,
-          "tempoChegadaInicial": 2.5,
-          "tempoMinimoChegada": 2,
-          "tempoMaximoChegada": 3,
-          "tempoMinimoSaida": 2,
-          "tempoMaximoSaida": 5
-        },
-        "2": {
-          "id": 2,
-          "servidores": 1,
-          "capacidade": 3,
-          "tempoMinimoSaida": 3,
-          "tempoMaximoSaida": 5
-        }
+  {
+    "filas": {
+      "1": {
+        "id": 1,
+        "roteamentos": [
+          {
+            "destino": 2,
+            "probabilidade": 1
+          }
+        ],
+        "servidores": 2,
+        "capacidade": 3,
+        "comChegadasDaRua": true,
+        "tempoChegadaInicial": 2.5,
+        "tempoMinimoChegada": 2,
+        "tempoMaximoChegada": 3,
+        "tempoMinimoSaida": 2,
+        "tempoMaximoSaida": 5
       },
-      "simulacao": {
-        "execucoes": 5,
-        "maximoAleatoriosConsumidos": 100000
+      "2": {
+        "id": 2,
+        "servidores": 1,
+        "capacidade": 3,
+        "tempoMinimoSaida": 3,
+        "tempoMaximoSaida": 5
       }
+    },
+    "simulacao": {
+      "execucoes": 5,
+      "maximoAleatoriosConsumidos": 100000
     }
-  ]
-  
+  }
+]

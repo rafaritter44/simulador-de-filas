@@ -1,21 +1,59 @@
 
 > Task :run
 CONFIG:
-{"filas":{"1":{"id":1,"paraId":2,"servidores":2,"capacidade":3,"tempoMinimoChegada":2.0,"tempoMaximoChegada":3.0,"tempoMinimoSaida":2.0,"tempoMaximoSaida":5.0},"2":{"id":2,"paraId":0,"servidores":1,"capacidade":3,"tempoMinimoChegada":0.0,"tempoMaximoChegada":0.0,"tempoMinimoSaida":3.0,"tempoMaximoSaida":5.0}},"simulacao":{"vezes":5,"tempoChegadaInicial":2.5,"maximoEventosAgendados":100000}}
+{
+  "filas" : {
+    "1" : {
+      "id" : 1,
+      "roteamentos" : [ {
+        "destino" : 2,
+        "probabilidade" : 1.0
+      } ],
+      "servidores" : 2,
+      "capacidade" : 3,
+      "capacidadeInfinita" : false,
+      "comChegadasDaRua" : true,
+      "tempoChegadaInicial" : 2.5,
+      "tempoMinimoChegada" : 2.0,
+      "tempoMaximoChegada" : 3.0,
+      "tempoMinimoSaida" : 2.0,
+      "tempoMaximoSaida" : 5.0
+    },
+    "2" : {
+      "id" : 2,
+      "roteamentos" : [ ],
+      "servidores" : 1,
+      "capacidade" : 3,
+      "capacidadeInfinita" : false,
+      "comChegadasDaRua" : false,
+      "tempoChegadaInicial" : 0.0,
+      "tempoMinimoChegada" : 0.0,
+      "tempoMaximoChegada" : 0.0,
+      "tempoMinimoSaida" : 3.0,
+      "tempoMaximoSaida" : 5.0
+    }
+  },
+  "simulacao" : {
+    "execucoes" : 5,
+    "maximoAleatoriosConsumidos" : 100000
+  }
+}
 FILA 1
-TEMPO TOTAL: 95199.8971
+TEMPO TOTAL: 95216.4604
 RESULTADO:
-CLIENTES NA FILA: 0	TEMPO: 1907.0548	PORCENTAGEM: 2.0032
-CLIENTES NA FILA: 1	TEMPO: 53100.9115	PORCENTAGEM: 55.7783
-CLIENTES NA FILA: 2	TEMPO: 39654.4787	PORCENTAGEM: 41.6539
-CLIENTES NA FILA: 3	TEMPO: 537.4520	PORCENTAGEM: 0.5646
+CLIENTES NA FILA: 0	TEMPO: 1964.7130	PORCENTAGEM: 2.0634
+CLIENTES NA FILA: 1	TEMPO: 53138.4800	PORCENTAGEM: 55.8081
+CLIENTES NA FILA: 2	TEMPO: 39631.9802	PORCENTAGEM: 41.6230
+CLIENTES NA FILA: 3	TEMPO: 481.2872	PORCENTAGEM: 0.5055
+PERDAS: 0
 FILA 2
-TEMPO TOTAL: 95199.8971
+TEMPO TOTAL: 95216.4604
 RESULTADO:
-CLIENTES NA FILA: 0	TEMPO: 6.1191	PORCENTAGEM: 0.0064
-CLIENTES NA FILA: 1	TEMPO: 470.9308	PORCENTAGEM: 0.4947
-CLIENTES NA FILA: 2	TEMPO: 37364.6096	PORCENTAGEM: 39.2486
-CLIENTES NA FILA: 3	TEMPO: 57358.2376	PORCENTAGEM: 60.2503
+CLIENTES NA FILA: 0	TEMPO: 6.7262	PORCENTAGEM: 0.0071
+CLIENTES NA FILA: 1	TEMPO: 483.9592	PORCENTAGEM: 0.5083
+CLIENTES NA FILA: 2	TEMPO: 37691.8493	PORCENTAGEM: 39.5854
+CLIENTES NA FILA: 3	TEMPO: 57033.9258	PORCENTAGEM: 59.8992
+PERDAS: 14254
 
 BUILD SUCCESSFUL in 3s
 3 actionable tasks: 1 executed, 2 up-to-date

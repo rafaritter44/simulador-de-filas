@@ -14,7 +14,6 @@ public abstract class Evento {
 	public abstract void executar();
 	
 	public void agendar() {
-		CONTEXTO.setEventosAgendados(CONTEXTO.getEventosAgendados() + 1);
 		CONTEXTO.getEscalonador().add(this);
 	}
 	
@@ -33,13 +32,18 @@ public abstract class Evento {
 				.values()
 				.parallelStream()
 				.forEach(fila -> {
-					final Map<Integer, Double> tempoPorClientes = fila.getTempoPorClientes();
+					final Map<Integer, Double> tempoPorClientes = fila.getResultado().getTempoPorClientes();
 					final double tempoJaContabilizado = Optional
 							.ofNullable(tempoPorClientes.get(fila.getClientes()))
 							.orElse(0D);
 					tempoPorClientes.put(fila.getClientes(), this.tempo - tempoGlobal + tempoJaContabilizado);
 				});
 		CONTEXTO.setTempo(this.tempo);
+	}
+	
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName() + "@tempo=" + tempo;
 	}
 	
 }

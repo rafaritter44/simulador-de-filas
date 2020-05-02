@@ -16,4 +16,8 @@ public class EscalonadorDeEventos {
 		eventos.add(e);
 	}
 	
+	public PriorityQueue<Evento> getEventos() {
+		return new PriorityQueue<Evento>(eventos);
+	}
+	
 }

@@ -1,10 +1,11 @@
 package com.github.rafaritter44.simulador.evento;
 
-import java.util.Optional;
+import java.util.List;
 
 import com.github.rafaritter44.simulador.Contexto;
 import com.github.rafaritter44.simulador.aleatorio.GeradorDeAleatorios;
 import com.github.rafaritter44.simulador.fila.Fila;
+import com.github.rafaritter44.simulador.fila.Roteamento;
 
 public class Chegada extends Evento {
 	
@@ -26,18 +27,42 @@ public class Chegada extends Evento {
 	@Override
 	public void executar() {
 		super.contabilizarTempo();
-		if (fila.getClientes() < fila.getCapacidade()) {
+		if (fila.isCapacidadeInfinita() || fila.getClientes() < fila.getCapacidade()) {
 			fila.chegada();
 			if (fila.getClientes() <= fila.getServidores()) {
-				final Optional<Fila> para = Optional.ofNullable(CONTEXTO.getFilas().get(fila.getParaId()));
-				if (para.isPresent()) {
-					new Passagem(fila, para.get()).agendar();
+				final List<Roteamento> roteamentos = fila.getRoteamentos();
+				if (roteamentos.isEmpty()) {
+					new Saida(fila).agendar();
+				} else if (roteamentos.get(0).getProbabilidade() == 1D) {
+					final Fila destino = CONTEXTO.getFilas().get(roteamentos.get(0).getDestino());
+					new Passagem(fila, destino).agendar();
 				} else {
-					new Saida(fila).agendar();	
+					final double aleatorio = CONTEXTO.getGeradorDeAleatorios().proximo();
+					double probabilidadeAcumulada = 0D;
+					boolean passagemAgendada = false;
+					for (final Roteamento roteamento : roteamentos) {
+						probabilidadeAcumulada += roteamento.getProbabilidade();
+						if (aleatorio < probabilidadeAcumulada) {
+							final Fila destino = CONTEXTO.getFilas().get(roteamento.getDestino());
+							new Passagem(fila, destino).agendar();
+							passagemAgendada = true;
+							break;
+						}
+					}
+					if (!passagemAgendada) {
+						new Saida(fila).agendar();
+					}
 				}
 			}
+		} else {
+			fila.perda();
 		}
 		new Chegada(fila).agendar();
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + ";fila=" + fila.getId();
 	}
 	
 }

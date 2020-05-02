@@ -1,22 +1,26 @@
 package com.github.rafaritter44.simulador.fila;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
 
 public class Fila {
 	
 	private int id;
-	private int paraId;
+	private List<Roteamento> roteamentos;
 	private int servidores;
 	private int capacidade;
+	private boolean capacidadeInfinita;
+	private boolean comChegadasDaRua;
+	private double tempoChegadaInicial;
 	private double tempoMinimoChegada, tempoMaximoChegada;
 	private double tempoMinimoSaida, tempoMaximoSaida;
 	private transient int clientes;
-	private transient Map<Integer, Double> tempoPorClientes;
+	private transient Resultado resultado;
 	
 	public Fila() {
+		roteamentos = Collections.emptyList();
 		clientes = 0;
-		tempoPorClientes = new HashMap<>();
+		resultado = new Resultado();
 	}
 	
 	public void chegada() {
@@ -27,9 +31,13 @@ public class Fila {
 		clientes -= 1;
 	}
 	
+	public void perda() {
+		resultado.perda();
+	}
+	
 	public void limpar() {
 		clientes = 0;
-		tempoPorClientes = new HashMap<>();
+		resultado = new Resultado();
 	}
 	
 	public int getId() {
@@ -40,12 +48,12 @@ public class Fila {
 		this.id = id;
 	}
 	
-	public int getParaId() {
-		return paraId;
+	public List<Roteamento> getRoteamentos() {
+		return roteamentos;
 	}
 	
-	public void setParaId(final int paraId) {
-		this.paraId = paraId;
+	public void setRoteamentos(final List<Roteamento> roteamentos) {
+		this.roteamentos = roteamentos;
 	}
 
 	public int getServidores() {
@@ -62,6 +70,30 @@ public class Fila {
 
 	public void setCapacidade(final int capacidade) {
 		this.capacidade = capacidade;
+	}
+	
+	public boolean isCapacidadeInfinita() {
+		return capacidadeInfinita;
+	}
+	
+	public void setCapacidadeInfinita(final boolean capacidadeInfinita) {
+		this.capacidadeInfinita = capacidadeInfinita;
+	}
+	
+	public boolean isComChegadasDaRua() {
+		return comChegadasDaRua;
+	}
+	
+	public void setComChegadasDaRua(final boolean comChegadasDaRua) {
+		this.comChegadasDaRua = comChegadasDaRua;
+	}
+	
+	public double getTempoChegadaInicial() {
+		return tempoChegadaInicial;
+	}
+	
+	public void setTempoChegadaInicial(final double tempoChegadaInicial) {
+		this.tempoChegadaInicial = tempoChegadaInicial;
 	}
 
 	public double getTempoMinimoChegada() {
@@ -104,12 +136,12 @@ public class Fila {
 		this.clientes = clientes;
 	}
 	
-	public Map<Integer, Double> getTempoPorClientes() {
-		return tempoPorClientes;
+	public Resultado getResultado() {
+		return resultado;
 	}
-
-	public void setTempoPorClientes(final Map<Integer, Double> tempoPorClientes) {
-		this.tempoPorClientes = tempoPorClientes;
+	
+	public void setResultado(final Resultado resultado) {
+		this.resultado = resultado;
 	}
 	
 }

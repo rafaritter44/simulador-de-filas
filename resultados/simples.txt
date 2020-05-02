@@ -1,25 +1,67 @@
 
 > Task :run
 CONFIG:
-{"filas":{"1":{"id":1,"paraId":0,"servidores":1,"capacidade":5,"tempoMinimoChegada":2.0,"tempoMaximoChegada":4.0,"tempoMinimoSaida":3.0,"tempoMaximoSaida":5.0}},"simulacao":{"vezes":5,"tempoChegadaInicial":3.0,"maximoEventosAgendados":100000}}
+{
+  "filas" : {
+    "1" : {
+      "id" : 1,
+      "roteamentos" : [ ],
+      "servidores" : 1,
+      "capacidade" : 5,
+      "capacidadeInfinita" : false,
+      "comChegadasDaRua" : true,
+      "tempoChegadaInicial" : 3.0,
+      "tempoMinimoChegada" : 2.0,
+      "tempoMaximoChegada" : 4.0,
+      "tempoMinimoSaida" : 3.0,
+      "tempoMaximoSaida" : 5.0
+    }
+  },
+  "simulacao" : {
+    "execucoes" : 5,
+    "maximoAleatoriosConsumidos" : 100000
+  }
+}
 FILA 1
-TEMPO TOTAL: 171423.0989
+TEMPO TOTAL: 171413.2590
 RESULTADO:
-CLIENTES NA FILA: 0	TEMPO: 3.1275	PORCENTAGEM: 0.0018
-CLIENTES NA FILA: 1	TEMPO: 11.3701	PORCENTAGEM: 0.0066
-CLIENTES NA FILA: 2	TEMPO: 14.3610	PORCENTAGEM: 0.0084
-CLIENTES NA FILA: 3	TEMPO: 258.7226	PORCENTAGEM: 0.1509
-CLIENTES NA FILA: 4	TEMPO: 68657.2889	PORCENTAGEM: 40.0514
-CLIENTES NA FILA: 5	TEMPO: 102478.2287	PORCENTAGEM: 59.7809
+CLIENTES NA FILA: 0	TEMPO: 3.0000	PORCENTAGEM: 0.0018
+CLIENTES NA FILA: 1	TEMPO: 5.2021	PORCENTAGEM: 0.0030
+CLIENTES NA FILA: 2	TEMPO: 10.8836	PORCENTAGEM: 0.0063
+CLIENTES NA FILA: 3	TEMPO: 215.9069	PORCENTAGEM: 0.1260
+CLIENTES NA FILA: 4	TEMPO: 68165.2434	PORCENTAGEM: 39.7666
+CLIENTES NA FILA: 5	TEMPO: 103013.0229	PORCENTAGEM: 60.0963
+PERDAS: 14334
 CONFIG:
-{"filas":{"1":{"id":1,"paraId":0,"servidores":2,"capacidade":5,"tempoMinimoChegada":2.0,"tempoMaximoChegada":4.0,"tempoMinimoSaida":3.0,"tempoMaximoSaida":5.0}},"simulacao":{"vezes":5,"tempoChegadaInicial":3.0,"maximoEventosAgendados":100000}}
+{
+  "filas" : {
+    "1" : {
+      "id" : 1,
+      "roteamentos" : [ ],
+      "servidores" : 2,
+      "capacidade" : 5,
+      "capacidadeInfinita" : false,
+      "comChegadasDaRua" : true,
+      "tempoChegadaInicial" : 3.0,
+      "tempoMinimoChegada" : 2.0,
+      "tempoMaximoChegada" : 4.0,
+      "tempoMinimoSaida" : 3.0,
+      "tempoMaximoSaida" : 5.0
+    }
+  },
+  "simulacao" : {
+    "execucoes" : 5,
+    "maximoAleatoriosConsumidos" : 100000
+  }
+}
 FILA 1
-TEMPO TOTAL: 150019.3850
+TEMPO TOTAL: 150010.5727
 RESULTADO:
-CLIENTES NA FILA: 0	TEMPO: 2061.9720	PORCENTAGEM: 1.3745
-CLIENTES NA FILA: 1	TEMPO: 95943.1981	PORCENTAGEM: 63.9539
-CLIENTES NA FILA: 2	TEMPO: 51739.0697	PORCENTAGEM: 34.4883
-CLIENTES NA FILA: 3	TEMPO: 275.1453	PORCENTAGEM: 0.1834
+CLIENTES NA FILA: 0	TEMPO: 2072.7310	PORCENTAGEM: 1.3817
+CLIENTES NA FILA: 1	TEMPO: 95938.5793	PORCENTAGEM: 63.9545
+CLIENTES NA FILA: 2	TEMPO: 51727.5942	PORCENTAGEM: 34.4826
+CLIENTES NA FILA: 3	TEMPO: 271.6682	PORCENTAGEM: 0.1811
+PERDAS: 0
 
 BUILD SUCCESSFUL in 1s
 3 actionable tasks: 1 executed, 2 up-to-date

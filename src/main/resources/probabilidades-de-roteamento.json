@@ -1,0 +1,62 @@
+[
+    {
+      "filas": {
+        "1": {
+          "id": 1,
+          "roteamentos": [
+              {
+                  "destino": 2,
+                  "probabilidade": 0.8
+              },
+              {
+                  "destino": 3,
+                  "probabilidade": 0.2
+              }
+          ],
+          "servidores": 1,
+          "capacidadeInfinita": true,
+          "comChegadasDaRua": true,
+          "tempoChegadaInicial": 1,
+          "tempoMinimoChegada": 1,
+          "tempoMaximoChegada": 4,
+          "tempoMinimoSaida": 1,
+          "tempoMaximoSaida": 1.5
+        },
+        "2": {
+          "id": 2,
+          "roteamentos": [
+              {
+                  "destino": 1,
+                  "probabilidade": 0.3
+              },
+              {
+                  "destino": 3,
+                  "probabilidade": 0.5
+              }
+          ],
+          "servidores": 3,
+          "capacidade": 5,
+          "tempoMinimoSaida": 5,
+          "tempoMaximoSaida": 10
+        },
+        "3": {
+            "id": 3,
+            "roteamentos": [
+                {
+                    "destino": 2,
+                    "probabilidade": 0.7
+                }
+            ],
+            "servidores": 2,
+            "capacidade": 8,
+            "tempoMinimoSaida": 10,
+            "tempoMaximoSaida": 20
+        }
+      },
+      "simulacao": {
+        "execucoes": 5,
+        "maximoAleatoriosConsumidos": 100000
+      }
+    }
+  ]
+  

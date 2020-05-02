@@ -19,7 +19,7 @@ public class Contexto {
 	private Supplier<GeradorDeAleatorios> geradorDeAleatoriosFactory;
 	private Map<Integer, Fila> filas;
 	private double tempo;
-	private int eventosAgendados;
+	private int aleatoriosConsumidos;
 	
 	private Contexto() {
 		geradorDeAleatoriosFactory = () -> new GeradorDeAleatorios(new MetodoCongruenteLinear());
@@ -36,7 +36,11 @@ public class Contexto {
 			filas.values().parallelStream().forEach(Fila::limpar);
 		}
 		tempo = 0D;
-		eventosAgendados = 0;
+		aleatoriosConsumidos = 0;
+	}
+	
+	public void consumirAleatorio() {
+		aleatoriosConsumidos += 1;
 	}
 
 	public EscalonadorDeEventos getEscalonador() {
@@ -79,12 +83,12 @@ public class Contexto {
 		this.tempo = tempo;
 	}
 
-	public int getEventosAgendados() {
-		return eventosAgendados;
+	public int getAleatoriosConsumidos() {
+		return aleatoriosConsumidos;
 	}
 
-	public void setEventosAgendados(final int eventosAgendados) {
-		this.eventosAgendados = eventosAgendados;
+	public void setAleatoriosConsumidos(final int aleatoriosConsumidos) {
+		this.aleatoriosConsumidos = aleatoriosConsumidos;
 	}
 	
 }

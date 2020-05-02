@@ -14,6 +14,14 @@ import com.github.rafaritter44.simulador.fila.SimuladorDeFilas;
 
 public class Main {
 	
+	/**
+	 * Rotina principal do programa, responsável por ler o arquivo de entrada da simulação, delegar cada
+	 * configuração para ser executada pelo {@link SimuladorDeFilas}, e, por fim, imprimir os resultados na
+	 * saída padrão.
+	 * 
+	 * @param args Na posição 0 do array de {@link String}, espera-se o nome do arquivo de entrada da simulação
+	 * @throws IOException
+	 */
 	public static void main(final String[] args) throws IOException {
 		final String arquivo = String.format("/%s.json", args[0]);
 		final InputStream is = Main.class.getResourceAsStream(arquivo);

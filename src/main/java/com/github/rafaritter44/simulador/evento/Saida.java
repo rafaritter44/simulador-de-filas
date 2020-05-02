@@ -7,18 +7,41 @@ import com.github.rafaritter44.simulador.aleatorio.GeradorDeAleatorios;
 import com.github.rafaritter44.simulador.fila.Fila;
 import com.github.rafaritter44.simulador.fila.Roteamento;
 
+/**
+ * Representa um {@link Evento} de saída.
+ * 
+ * @author Rafael Ritter
+ */
 public class Saida extends Evento {
 	
 	private static final Contexto CONTEXTO = Contexto.get();
 	
 	private final Fila fila;
 	
+	/**
+	 * Constrói um novo {@link Evento} de saída da {@link Fila} passada por parâmetro.
+	 * O {@link Evento#tempo} deste evento é definido com base nos métodos
+	 * {@link Fila#getTempoMinimoSaida()} e {@link Fila#getTempoMaximoSaida()}, e no
+	 * aleatório gerado pelo {@link GeradorDeAleatorios} definido no {@link Contexto} da simulação.
+	 * 
+	 * @param fila A fila na qual essa saída ocorrerá
+	 */
 	public Saida(final Fila fila) {
 		this.fila = fila;
-		final GeradorDeAleatorios geradorDeAleatorios = Contexto.get().getGeradorDeAleatorios();
+		final GeradorDeAleatorios geradorDeAleatorios = CONTEXTO.getGeradorDeAleatorios();
 		super.setTempo(geradorDeAleatorios.proximo(fila.getTempoMinimoSaida(), fila.getTempoMaximoSaida()));
 	}
 
+	/**
+	 * <p>Rotina que executa o algoritmo da saída.</p>
+	 * 
+	 * <p>Primeiramente, contabiliza o tempo ({@link Evento#contabilizarTempo()}). Em seguida, o cliente
+	 * sai da fila ({@link Fila#saida()}), e é verificado se existe algum cliente de frente para um
+	 * servidor. Caso exista, é agendada a sua saída da {@link Saida#fila}, seja por meio de uma
+	 * {@link Saida}, seja por meio de uma {@link Passagem} para outra {@link Fila}. Isso dependerá da
+	 * configuração da simulação, e possivelmente dos aleatórios gerados pelo {@link GeradorDeAleatorios},
+	 * caso se trate de uma rede de filas com probabilidades de roteamento.</p>
+	 */
 	@Override
 	public void executar() {
 		super.contabilizarTempo();

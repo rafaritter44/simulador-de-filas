@@ -5,6 +5,11 @@ import java.util.Optional;
 
 import com.github.rafaritter44.simulador.Contexto;
 
+/**
+ * Essa classe é a base para os outros eventos.
+ * 
+ * @author Rafael Ritter
+ */
 public abstract class Evento {
 	
 	private static final Contexto CONTEXTO = Contexto.get();
@@ -25,6 +30,10 @@ public abstract class Evento {
 		this.tempo = tempo + CONTEXTO.getTempo();
 	}
 	
+	/**
+	 * Faz a contabilização do tempo para todas as filas da simulação.
+	 * Esse método deve ser chamado no início do {@link Evento#executar()} de todos os eventos.
+	 */
 	protected void contabilizarTempo() {
 		final double tempoGlobal = CONTEXTO.getTempo();
 		CONTEXTO

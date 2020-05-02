@@ -7,6 +7,11 @@ import com.github.rafaritter44.simulador.aleatorio.GeradorDeAleatorios;
 import com.github.rafaritter44.simulador.fila.Fila;
 import com.github.rafaritter44.simulador.fila.Roteamento;
 
+/**
+ * Representa um {@link Evento} de passagem.
+ * 
+ * @author Rafael Ritter
+ */
 public class Passagem extends Evento {
 	
 	private static final Contexto CONTEXTO = Contexto.get();
@@ -14,6 +19,15 @@ public class Passagem extends Evento {
 	private final Fila origem;
 	private final Fila destino;
 	
+	/**
+	 * Constrói um novo {@link Evento} de passagem da {@link Fila} origem para a destino.
+	 * O {@link Evento#tempo} deste evento é definido com base nos métodos
+	 * {@link Fila#getTempoMinimoSaida()} e {@link Fila#getTempoMaximoSaida()} da origem, e no
+	 * aleatório gerado pelo {@link GeradorDeAleatorios} definido no {@link Contexto} da simulação.
+	 * 
+	 * @param origem A fila da qual o cliente sairá
+	 * @param destino A fila na qual o cliente chegará
+	 */
 	public Passagem(final Fila origem, final Fila destino) {
 		this.origem = origem;
 		this.destino = destino;
@@ -21,6 +35,24 @@ public class Passagem extends Evento {
 		super.setTempo(geradorDeAleatorios.proximo(origem.getTempoMinimoSaida(), origem.getTempoMaximoSaida()));
 	}
 
+	/**
+	 * <p>Rotina que executa o algoritmo da passagem.</p>
+	 * 
+	 * <p>Primeiramente, contabiliza o tempo ({@link Evento#contabilizarTempo()}). Em seguida, o cliente
+	 * sai da {@link Passagem#origem} ({@link Fila#saida()}), e é verificado se existe algum cliente de frente
+	 * para um servidor na {@link Passagem#origem}. Caso exista, é agendada a sua saída da
+	 * {@link Passagem#origem}, seja por meio de uma {@link Saida}, seja por meio de uma {@link Passagem} para
+	 * outra {@link Fila}. Isso dependerá da configuração da simulação, e possivelmente dos aleatórios gerados
+	 * pelo {@link GeradorDeAleatorios}, caso se trate de uma rede de filas com probabilidades de roteamento.</p>
+	 * 
+	 * <p>Em seguida, verifica se o {@link Passagem#destino} está cheio. Caso esteja, contabiliza uma perda
+	 * ({@link Fila#perda()} para o {@link Passagem#destino}; caso contrário, o cliente entra na fila
+	 * ({@link Fila#chegada()}), e é verificado se o cliente está de frente para um servidor. Caso esteja, é
+	 * agendada a saída do cliente da {@link Passagem#destino}, seja por meio de uma {@link Saida}, seja por
+	 * meio de uma {@link Passagem} para outra {@link Fila}. Isso dependerá da configuração da simulação, e
+	 * possivelmente dos aleatórios gerados pelo {@link GeradorDeAleatorios}, caso se trate de uma rede de
+	 * filas com probabilidades de roteamento.</p>
+	 */
 	@Override
 	public void executar() {
 		super.contabilizarTempo();

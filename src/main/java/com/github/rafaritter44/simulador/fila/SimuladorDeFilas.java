@@ -18,6 +18,13 @@ public class SimuladorDeFilas {
 	
 	private static final Contexto CONTEXTO = Contexto.get();
 	
+	/**
+	 * Algoritmo que executa uma simulação {@link Simulacao#getExecucoes()} vezes, e que depois faz a média dos resultados de
+	 * cada execução -- isto é, tanto do {@link Resultado#getTempoPorClientes()} quanto das {@link Resultado#getPerdas()}.
+	 * 
+	 * @param simulacao Configuração da simulação a ser executada
+	 * @return O objeto {@link Resultado} correspondente a cada {@link Fila}, definida pelo seu {@link Fila#getId()}
+	 */
 	public Map<Integer, Resultado> simular(final Simulacao simulacao) {
 		final int execucoes = simulacao.getExecucoes();
 		final int maximoAleatoriosConsumidos = simulacao.getMaximoAleatoriosConsumidos();
@@ -72,6 +79,18 @@ public class SimuladorDeFilas {
 		return mediaDosResultados;
 	}
 	
+	/**
+	 * <p>Algoritmo que executa uma única simulação.</p>
+	 * 
+	 * <p>Primeiramente, as chegadas ({@link Chegada}) iniciais são agendadas, para as filas que recebem chegadas da rua
+	 * ({@link Fila#isComChegadasDaRua()}), com base no método {@link Fila#getTempoChegadaInicial()}. Em seguida, são executados
+	 * ({@link com.github.rafaritter44.simulador.evento.Evento#executar()}) os eventos
+	 * ({@link com.github.rafaritter44.simulador.evento.Evento}) priorizados pelo {@link EscalonadorDeEventos} até que o número
+	 * máximo de aleatórios (definido pela {@link com.github.rafaritter44.simulador.Configuracao} da {@link Simulacao}) seja
+	 * consumido.</p>
+	 * 
+	 * @param maximoAleatoriosConsumidos limite de aleatórios a serem consumidos pela simulação, definindo o fim da simulação
+	 */
 	private void simular(final int maximoAleatoriosConsumidos) {
 		CONTEXTO.limpar();
 		CONTEXTO
